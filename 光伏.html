@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿色能源光伏解决方案</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 顶部导航 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4CAF50;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4CAF50;
+        }
+
+        /* 顶部宣传栏 */
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .banner-content {
+            max-width: 800px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .banner h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            background-color: #3e8e41;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+
+        /* 服务区域 */
+        .services {
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            font-size: 2.5rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .service-box {
+            background: white;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-box i {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .service-box h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .service-box p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* 详情模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            animation: modalopen 0.5s;
+        }
+
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+        /* 联系表单 */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        /* 底部联系信息 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        .quick-links {
+            list-style: none;
+        }
+
+        .quick-links li {
+            margin-bottom: 10px;
+        }
+
+        .quick-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .quick-links a:hover {
+            color: #4CAF50;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            font-size: 0.9rem;
+        }
+
+        /* 聊天小部件 */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .chat-widget:hover {
+            transform: scale(1.1);
+            background-color: #3e8e41;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .banner h1 {
+                font-size: 2.5rem;
+            }
+
+            .banner p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .service-box {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .service-box:nth-child(1) { animation-delay: 0.1s; }
+        .service-box:nth-child(2) { animation-delay: 0.2s; }
+        .service-box:nth-child(3) { animation-delay: 0.3s; }
+        .service-box:nth-child(4) { animation-delay: 0.4s; }
+        .service-box:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-solar-panel"></i>
+                    <span>SolarEnergy</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#services">服务</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 顶部宣传栏 -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>绿色能源，光明未来</h1>
+            <p>专业光伏解决方案，为您节省能源成本，保护地球环境</p>
+            <div class="cta-buttons">
+                <a href="#services" class="cta-button">了解我们的服务</a>
+                <a href="#contact" class="cta-button secondary">立即咨询</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 服务区域 -->
+        <section id="services" class="services">
+            <h2 class="section-title">我们的光伏解决方案</h2>
+            <div class="services-grid">
+                <!-- 光伏租用 -->
+                <div class="service-box" onclick="openModal('solar-rent')">
+                    <i class="fas fa-solar-panel"></i>
+                    <h3>光伏租用</h3>
+                    <p>零首付，低成本租用光伏设备，立即享受绿色能源</p>
+                    <a class="read-more">了解更多</a>
+                </div>
+
+                <!-- 用户自建 -->
+                <div class="service-box" onclick="openModal('self-build')">
+                    <i class="fas fa-tools"></i>
+                    <h3>用户自建</h3>
+                    <p>提供全套自建方案与技术指导，打造专属光伏系统</p>
+                    <a class="read-more">了解更多</a>
+                </div>
+
+                <!-- 离网自投 -->
+                <div class="service-box" onclick="openModal('off-grid')">
+                    <i class="fas fa-plug"></i>
+                    <h3>离网自投</h3>
+                    <p>独立离网系统解决方案，适合偏远地区和无电区域</p>
+                    <a class="read-more">了解更多</a>
+                </div>
+
+                <!-- 混网自投 -->
+                <div class="service-box" onclick="openModal('hybrid-grid')">
+                    <i class="fas fa-bolt"></i>
+                    <h3>混网自投</h3>
+                    <p>混合电网系统，兼顾市电与太阳能，保障持续供电</p>
+                    <a class="read-more">了解更多</a>
+                </div>
+
+                <!-- 光储发电 -->
+                <div class="service-box" onclick="openModal('solar-storage')">
+                    <i class="fas fa-battery-full"></i>
+                    <h3>光储发电</h3>
+                    <p>光伏发电与储能系统结合，最大化能源利用效率</p>
+                    <a class="read-more">了解更多</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系表单 -->
+        <section id="contact" class="contact-form">
+            <h2 class="section-title">联系我们</h2>
+            <form id="consultationForm">
+                <div class="form-group">
+                    <label for="name">您的姓名</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">电子邮箱</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">感兴趣的服务</label>
+                    <select id="service" name="service">
+                        <option value="">请选择服务类型</option>
+                        <option value="solar-rent">光伏租用</option>
+                        <option value="self-build">用户自建</option>
+                        <option value="off-grid">离网自投</option>
+                        <option value="hybrid-grid">混网自投</option>
+                        <option value="solar-storage">光储发电</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">您的需求</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">提交咨询</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="solar-rent" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('solar-rent')">&times;</span>
+            <h2>光伏租用服务</h2>
+            <p>我们的光伏租用服务让您无需投入大量资金即可享受太阳能带来的便利。我们提供：</p>
+            <ul>
+                <li>零首付，低月租</li>
+                <li>全程安装与维护服务</li>
+                <li>设备保险包含在租用费用中</li>
+                <li>灵活的租期选择</li>
+                <li>租期结束后可优惠购买设备</li>
+            </ul>
+            <p>适合住宅、商业和工业用户，立即降低您的能源成本！</p>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal('solar-rent'); scrollToContact();">立即咨询</button>
+        </div>
+    </div>
+
+    <div id="self-build" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('self-build')">&times;</span>
+            <h2>用户自建服务</h2>
+            <p>对于喜欢DIY的用户，我们提供全面的自建支持：</p>
+            <ul>
+                <li>个性化系统设计咨询</li>
+                <li>优质设备供应</li>
+                <li>详细的安装指导手册</li>
+                <li>远程技术支持</li>
+                <li>系统性能监测工具</li>
+            </ul>
+            <p>自己动手，打造专属光伏系统，体验创造的乐趣！</p>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal('self-build'); scrollToContact();">立即咨询</button>
+        </div>
+    </div>
+
+    <div id="off-grid" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('off-grid')">&times;</span>
+            <h2>离网自投解决方案</h2>
+            <p>我们的离网系统专为无法接入公共电网的区域设计：</p>
+            <ul>
+                <li>完全独立的电力系统</li>
+                <li>大容量储能解决方案</li>
+                <li>智能能源管理系统</li>
+                <li>适用于山区、牧场、岛屿等偏远地区</li>
+                <li>低维护设计，可靠运行</li>
+            </ul>
+            <p>让您在无电网区域也能享受现代电力便利！</p>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal('off-grid'); scrollToContact();">立即咨询</button>
+        </div>
+    </div>
+
+    <div id="hybrid-grid" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('hybrid-grid')">&times;</span>
+            <h2>混网自投系统</h2>
+            <p>混合电网系统结合了太阳能和市电的优势：</p>
+            <ul>
+                <li>优先使用太阳能，市电作为备份</li>
+                <li>智能切换，无缝衔接</li>
+                <li>电价高峰时段使用太阳能节省成本</li>
+                <li>可向电网售电（根据当地政策）</li>
+                <li>停电时自动切换至太阳能供电</li>
+            </ul>
+            <p>最大化能源利用效率，保障不间断电力供应！</p>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal('hybrid-grid'); scrollToContact();">立即咨询</button>
+        </div>
+    </div>
+
+    <div id="solar-storage" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('solar-storage')">&times;</span>
+            <h2>光储发电系统</h2>
+            <p>光伏加储能是未来能源利用的最佳方式：</p>
+            <ul>
+                <li>白天发电储存，夜晚使用</li>
+                <li>最大化自消费率，减少依赖电网</li>
+                <li>智能管理系统，优化充放电策略</li>
+                <li>模块化设计，便于扩展</li>
+                <li>长寿命锂电池技术</li>
+            </ul>
+            <p>将每一度太阳能都充分利用，实现能源自由！</p>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="closeModal('solar-storage'); scrollToContact();">立即咨询</button>
+        </div>
+    </div>
+
+    <!-- 底部联系信息 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>电话：<a href="tel:1812330800">18123320800</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>邮箱：<a href="739784598@qq.com">739784598@qq.com</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-globe"></i>
+                            <span>网站：<a href="https://www.solar-energy.com" target="_blank">www.solar-energy.com</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>地址：东部新区壮溪镇</span>
+                        </li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
+                        <a href="#" title="微博"><i class="fab fa-weibo"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="quick-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#services">服务项目</a></li>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">成功案例</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>服务项目</h3>
+                    <ul class="quick-links">
+                        <li><a href="#" onclick="openModal('solar-rent'); return false;">光伏租用</a></li>
+                        <li><a href="#" onclick="openModal('self-build'); return false;">用户自建</a></li>
+                        <li><a href="#" onclick="openModal('off-grid'); return false;">离网自投</a></li>
+                        <li><a href="#" onclick="openModal('hybrid-grid'); return false;">混网自投</a></li>
+                        <li><a href="#" onclick="openModal('solar-storage'); return false;">光储发电</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 东部新区璟宸电气门市部。版权所有。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 聊天小部件 -->
+    <div class="chat-widget" onclick="openChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script>
+        // 打开模态框
+        function openModal(id) {
+            document.getElementById(id).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        // 关闭模态框
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢复滚动
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 滚动到联系表单
+        function scrollToContact() {
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // 表单提交处理
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的咨询！我们会尽快与您联系。');
+            this.reset();
+        });
+
+        // 打开聊天窗口
+        function openChat() {
+            alert('在线客服功能即将开启！目前请通过电话或邮件联系我们。');
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
